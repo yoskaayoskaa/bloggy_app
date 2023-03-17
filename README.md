@@ -12,26 +12,24 @@ This app contains main social networks mechanics:
 
 ### Please follow these steps to run app on your local machine: 
 
-1. Clone this repository.
-2. Create a new Python project with virtual environment.
-3. Install all dependencies:      
+Clone this repository.  
 
+Create a new Python project with virtual environment.   
 
-    pip install -r requirements.txt
+Install all dependencies:      
 
-4. Init local SQLite database:
-        
+    $ pip install -r requirements.txt
+
+Init local SQLite database:
 
     $ flask db init
 
-5. Make migrations:
-
+Make migrations:
 
     $ flask db migrate
     $ flask db upgrade
 
-6. Run app:
-
+Run app:
 
     $ flask run
 
