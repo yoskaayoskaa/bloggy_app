@@ -1,6 +1,6 @@
 #  Bloggy webapp
 
-## Bloggy is a small pet-project developed on Flask.
+### Bloggy is a small pet-project developed on Flask.
 
 This app contains main social networks mechanics:   
     - user authentication   
