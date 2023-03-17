@@ -17,7 +17,7 @@ This app contains main social networks mechanics:
 3. Install all dependencies:      
 
 
-    $ pip install -r requirements.txt
+    pip install -r requirements.txt
 
 4. Init local SQLite database:
         
