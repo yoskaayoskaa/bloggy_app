@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block app_content %}
+    <h1>Нам жаль, что вы решили удалить свой профиль</h1>
+    <br>
+    <p>Обратите внимание! Все посты и сообщения будут удалены вместе с профилем "{{ current_user.username }}"
+        без возможности восстановления</p>
+
+    {{ wtf.quick_form(form) }}
+
+{% endblock %}

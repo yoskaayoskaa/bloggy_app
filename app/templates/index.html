@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block posts %}
+    {% for post in posts %}
+        {% include '_post.html' %}
+    {% endfor %}
+    <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous{% if not prev_url %} disabled{% endif %}">
+                <a href="{{ prev_url or '#' }}">
+                    <span aria-hidden="true">&larr;</span> Назад
+                </a>
+            </li>
+            <li class="next{% if not next_url %} disabled{% endif %}">
+                <a href="{{ next_url or '#' }}">
+                    Вперед <span aria-hidden="true">&rarr;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}
+
+{% block app_content %}
+    {% if func_name == 'index' %}
+        <h1>Привет, {{ current_user.username }}!</h1>
+        <br>
+        {{ wtf.quick_form(form) }}
+        <br>
+        <br>
+        {% if not posts %}
+            <p>Пока что вы ни на кого не подписаны</p>
+            <p>Найдите интересных блогеров в <a href="{{ url_for('main.explore') }}" style="text-decoration: none;">общей ленте </a>
+                и подпишитесь!</p>
+        
+        {% else %}
+            <p style="font-weight: bold;">Интересные вам блогеры:</p>              
+            {{ self.posts() }}
+        {% endif %}
+
+    {% elif func_name == 'explore' %}
+        {% if not posts %}
+            <h1>К сожалению, пока никто ничего не написал</h1>
+            <br>
+            <p>Будьте первым! <a href="{{ url_for('main.index') }}" style="text-decoration: none;">Напишите</a> что-нибудь интересное!</p>
+
+        {% else %}        
+            <h1>Посты всех блогеров:</h1>
+            <br>
+            {{ self.posts() }}
+        {% endif %}
+    {% endif %}
+{% endblock %}

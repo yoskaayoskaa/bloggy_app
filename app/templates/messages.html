@@ -1,0 +1,18 @@
+{% extends "base.html" and "index.html" %}
+
+{% block app_content %}
+    {% if not messages %}
+        <h1>К сожалению, пока вам никто не писал</h1>
+        <br>
+        <p>Найдите интересных блогеров в <a href="{{ url_for('main.explore') }}" style="text-decoration: none;">общей ленте</a>
+            и начните общение!</p>
+    
+    {% else %}
+        <h1>Входящие сообщения:</h1>
+        <br>
+        {% set posts = messages %}
+        {% block posts scoped %}
+            {{ super() }}
+        {% endblock %}
+    {% endif %}
+{% endblock %}

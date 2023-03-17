@@ -1,0 +1,63 @@
+{% extends "base.html" and "index.html" %}
+
+{% block app_content %}
+    <table class="table table-hover">
+        <tr>
+            <td width="256px"><img src="{{ user.avatar(256) }}"></td>
+            <td>
+                <h1>Блогер: {{ user.username }}</h1>
+                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+
+                {% if user.last_seen %}<p>Был онлайн: {{ moment(user.last_seen).format('LLL') }}</p>{% endif %}
+
+                <p>
+                    <form action="{{ url_for('main.followers', username=user.username) }}" method="get">
+                        <button class="btn btn-default">Подписки и подписчики</button>
+                    </form>    
+                </p>
+
+                {% if user == current_user %}
+                    <p>
+                        <form action="{{ url_for('main.edit_profile') }}" method="get">
+                            <button class="btn btn-default">Редактировать профиль</button>
+                        </form>
+                    </p>
+                    <p>
+                        <form action="{{ url_for('main.delete_profile') }}" method="get">
+                            <button class="btn btn-default">Удалить профиль</button>
+                        </form>
+                    </p>
+                
+                {% elif not current_user.is_following(user) %}
+                    {% include '_send_message.html' %}
+                    <p>
+                        <form action="{{ url_for('main.follow', username=user.username) }}" method="post">
+                            {{ form.hidden_tag() }}
+                            {{ form.submit(value='Подписаться', class_='btn btn-default') }}
+                        </form>
+                    </p>
+                
+                {% else %}
+                    {% include '_send_message.html' %}
+                    <p>
+                        <form action="{{ url_for('main.unfollow', username=user.username) }}" method="post">
+                            {{ form.hidden_tag() }}
+                            {{ form.submit(value='Отписаться', class_='btn btn-default') }}
+                        </form>
+                    </p>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+    <br>
+    {% if not posts %}
+        <p style="font-weight: bold;">Блогер еще ничего не писал</p>
+        <p>Посмотрите <a href="{{ url_for('main.explore') }}" style="text-decoration: none;">посты</a> других пользователей</p>
+
+    {% else %}
+        <p style="font-weight: bold;">Все посты блогера:</p>
+        {% block posts %}
+            {{ super() }}
+        {% endblock %}
+    {% endif %}
+{% endblock %}

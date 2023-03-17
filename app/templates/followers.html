@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+{% if not followed and not followers %}
+    <h1>Кажется, подписок и подписчиков еще нет</h1>
+    <br>
+    <p>Найдите интересных блогеров в <a href="{{ url_for('main.explore') }}" style="text-decoration: none;">общей ленте</a> и подпишитесь!</p>
+{% else %}
+    {% if user == current_user %}
+        <h1>Ваши подписки и подписчики:</h1>
+    {% else %}
+        <h1>Подписки и подписчики {{ user.username }}:</h1>
+    {% endif %}
+    <br>
+    <table class="table">
+        <tr>
+            <td>
+                <p>Подписки</p>
+                <br>
+                {% for user in followed %}                
+                    {% include "_follower.html" %}
+                {% endfor %}
+            </td>
+            <td>
+                <p>Подписчики</p>
+                <br>
+                {% for user in followers %}                
+                    {% include "_follower.html" %}
+                {% endfor %}
+            </td>
+        </tr>   
+    </table>
+{% endif %}
+{% endblock %}
